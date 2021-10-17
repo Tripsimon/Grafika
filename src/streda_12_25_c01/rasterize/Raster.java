@@ -46,4 +46,5 @@ public interface Raster {
      */
     void setPixel(int x, int y, int color);
 
+    //Prozkoumáno. nicméně žádná funkce není třeba upravovat :)
 }

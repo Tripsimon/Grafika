@@ -4,12 +4,15 @@ import streda_12_25_c01.model.Line;
 
 import java.awt.*;
 
-public class DashedLineRasterizer extends LineRasterizer {
+//děděno z Line Rasterizer
+public class FilledLineRasterizer extends LineRasterizer {
 
-    public DashedLineRasterizer(Raster raster) {
+    public FilledLineRasterizer(Raster raster) {
         super(raster);
     }
 
+
+    // Kontruktor třídy
     @Override
     public void rasterize(Line line) {
         int x1 = line.getX1();
@@ -20,14 +23,13 @@ public class DashedLineRasterizer extends LineRasterizer {
         rasterize(x1, y1, x2, y2, color);
 
     }
-    //Deklarace proměné, díky které bude linie děratá
-    int lineChecker = 0;
+
+    // Metoda pro rasterizování zadané linie
     @Override
     public void rasterize(int x1, int y1, int x2, int y2, Color color) {
+
         double dx,dy,steps,x,y,k;
         double xc,yc;
-
-
         dx=x2-x1;
         dy=y2-y1;
         if(Math.abs(dx)>Math.abs(dy))
@@ -42,12 +44,10 @@ public class DashedLineRasterizer extends LineRasterizer {
         {
             x=x+xc;
             y=y+yc;
-            if (lineChecker <=2){raster.setPixel((int)x,(int)y,color.getRGB());}lineChecker++; //Polovina pixelů, které by se měli zakreslit se nezakreslí.. tímto zpusovem je linie děravá
-            if (lineChecker>=6){lineChecker =0;}
-            if ((steps-k)<=3){raster.setPixel((int)x,(int)y,color.getRGB());} //Poslední 3 pixely linie budou vždy vykresleny //Bonus 2
+            raster.setPixel((int)x,(int)y,0xFF0000);
         }
-    }
 
+    }
 }
 
-//rasterovací mechanizmus je identický tomu, který využívá vyplněná linie
+// Pro implementaci jsem si vybral stejný algoritmus, který jsme využívaly při cvičení. V některých situacích je rozbitý, ale nejsem schopen přijít na to, čím to je. Když jsem zkoušel ostatní vykreslovací metody, problém se mi nezdál tak markantní ale pořád se vyskytuje.

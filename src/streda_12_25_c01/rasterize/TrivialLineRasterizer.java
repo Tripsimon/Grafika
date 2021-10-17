@@ -18,16 +18,29 @@ public class TrivialLineRasterizer extends LineRasterizer {
         int y2 = line.getY2();
         Color color = new Color(line.getColor());
         rasterize(x1, y1, x2, y2, color);
-    }
+    } //Převodník pro možnou práci se zadáním pomocí Line
 
     @Override
-    public void rasterize(int x1, int y1, int x2, int y2, Color color) {
-        float k = (y2 - y1) / (float) (x2 - x1);
-        float q = y1 - k * x1;
+    public void rasterize(int x1a, int y1a, int x2a, int y2a, Color color) {
 
-        for (int x = x1; x <= x2; x++) {
-            float y = k * x + q;
-            raster.setPixel(x, Math.round(y), 0xffff00);
+        double dx,dy,steps,x,y,k;
+        double xc,yc;
+        double x1=100,y1=20,x2=20,y2=20;
+        dx=x2-x1;
+        dy=y2-y1;
+        if(Math.abs(dx)>Math.abs(dy))
+            steps=Math.abs(dx);
+        else
+            steps=Math.abs(dy);
+        xc=(dx/steps);
+        yc=(dy/steps);
+        x=x1;
+        y=y1;
+        for(k=1;k<=steps;k++)
+        {
+            x=x+xc;
+            y=y+yc;
+            raster.setPixel((int)x,(int)y,0xFF0000);
         }
     }
 

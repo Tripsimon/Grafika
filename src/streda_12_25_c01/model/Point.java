@@ -14,4 +14,11 @@ public class Point {
         this.y = (int) Math.round(y);
     }
 
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
 }
