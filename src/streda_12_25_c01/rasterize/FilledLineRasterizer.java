@@ -50,4 +50,6 @@ public class FilledLineRasterizer extends LineRasterizer {
     }
 }
 
-// Pro implementaci jsem si vybral stejný algoritmus, který jsme využívaly při cvičení. V některých situacích je rozbitý, ale nejsem schopen přijít na to, čím to je. Když jsem zkoušel ostatní vykreslovací metody, problém se mi nezdál tak markantní ale pořád se vyskytuje.
+//Vybraný pro realizaci byl triviální algoritmus
+//Jeho výhoda je například využitelnosti těžších křivek při použití správných podmínek
+//Nevýhodou je neefektivnost při práci s desetinou čárkou a nutnost zaokrouhlování
