@@ -44,7 +44,7 @@ public class FilledLineRasterizer extends LineRasterizer {
         {
             x=x+xc;
             y=y+yc;
-            raster.setPixel((int)x,(int)y,0xFF0000);
+            raster.setPixel((int)x,(int)y,color.getRGB());
         }
 
     }

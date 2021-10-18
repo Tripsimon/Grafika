@@ -44,7 +44,7 @@ public class DashedLineRasterizer extends LineRasterizer {
             y=y+yc;
             if (lineChecker <=2){raster.setPixel((int)x,(int)y,color.getRGB());}lineChecker++; //Polovina pixelů, které by se měli zakreslit se nezakreslí.. tímto zpusovem je linie děravá
             if (lineChecker>=6){lineChecker =0;}
-            if ((steps-k)<=3){raster.setPixel((int)x,(int)y,color.getRGB());} //Poslední 3 pixely linie budou vždy vykresleny //Bonus 2
+            if ((steps-k)<=3){raster.setPixel((int)x,(int)y,color.getRGB());} //Poslední 3 pixely linie budou vždy vykresleny //Bonus 2 (Rok 2020)
         }
     }
 
