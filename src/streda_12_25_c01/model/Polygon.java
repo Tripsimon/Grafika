@@ -16,6 +16,7 @@ public class Polygon {
 
     private FilledLineRasterizer lineCreator;
     private DashedLineRasterizer dashedLineCreator;
+    private int currentNearest;
 
     //Konstruktor třídy
     public Polygon(Raster R) {
@@ -66,6 +67,28 @@ public class Polygon {
     public void removeLast(){ //Odebrání posledního bodu
         points.remove(points.size()-1);
 
+    }
+
+    public void findNearest(Point J){
+        int dis = (int)Math.sqrt((points.get(0).x - J.getX()) * (points.get(0).x - J.getX()) + (points.get(0).y - J.getY()) * (points.get(0).y - J.getY()));
+        currentNearest = 0;
+        for (int i = 0; i < points.size(); i++) {
+            if ((int)Math.sqrt((points.get(i).x - J.getX()) * (points.get(i).x - J.getX()) + (points.get(i).y - J.getY()) * (points.get(i).y - J.getY())) < dis){
+                dis = (int)Math.sqrt((points.get(i).x - J.getX()) * (points.get(i).x - J.getX()) + (points.get(i).y - J.getY()) * (points.get(i).y - J.getY()));
+                currentNearest = i;
+                System.out.println("Nejbližší je hrana: "+i);
+            }
+            System.out.println((int)Math.sqrt((points.get(i).x - J.getX()) * (points.get(i).x - J.getX()) + (points.get(i).y - J.getY()) * (points.get(i).y - J.getY())));
+        }
+        dashedLineCreator.rasterize(points.get(currentNearest).x,points.get(currentNearest).y,J.getX(),J.getY(),Color.RED);
+    }
+
+    public void showNearestReplacePoint(Point J){
+        dashedLineCreator.rasterize(points.get(currentNearest).x,points.get(currentNearest).y,J.getX(),J.getY(),Color.RED);
+    }
+
+    public void replaceNearest(Point J){
+        points.set(currentNearest,J);
     }
 
 

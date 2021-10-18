@@ -37,20 +37,30 @@ public class Controller2D {
             //stlačené tlačítko
             @Override
             public void mousePressed(MouseEvent e) {
-                if (!triangleMode){
-                    raster.clear();
-                    polygonHolder.addPoint(new Point(e.getX(),e.getY()));
-                    polygonHolder.rasterize();
-                }else {
-                    System.out.println(new Point(e.getX(),e.getY()));
-                    triangleHolder.addPoint(new Point(e.getX(),e.getY()));
-                    triangleHolder.rasterizeTriangle();
+                if (e.getButton() == 1) {
+                    if (!triangleMode) {
+                        raster.clear();
+                        polygonHolder.addPoint(new Point(e.getX(), e.getY()));
+                        polygonHolder.rasterize();
+                    } else {
+                        System.out.println(new Point(e.getX(), e.getY()));
+                        triangleHolder.addPoint(new Point(e.getX(), e.getY()));
+                        triangleHolder.rasterizeTriangle();
+                    }
+                }
+                if (e.getButton() == 3){
+                    polygonHolder.findNearest(new Point(e.getX(), e.getY()));
                 }
 
             //Release tlačítka
             }
              @Override
              public void mouseReleased(MouseEvent e){
+                 if (e.getButton() == 3){
+                     polygonHolder.replaceNearest(new Point(e.getX(), e.getY()));
+                     raster.clear();
+                     polygonHolder.rasterize();
+                 }
 
 
             }
@@ -61,8 +71,16 @@ public class Controller2D {
             //Pohnutí myši
             @Override
             public void mouseDragged(MouseEvent e) { //Odposlouchávání pro pohnutí myší (Znázornění vygenerování)
-                raster.clear();
-                polygonHolder.showWhere(new Point(e.getX(),e.getY()));
+                if (e.getModifiersEx() == 1024){
+                    System.out.println();
+                    raster.clear();
+                    polygonHolder.showWhere(new Point(e.getX(),e.getY()));
+                }
+                if (e.getModifiersEx() == 4096){
+                    raster.clear();
+                    polygonHolder.rasterize();
+                    polygonHolder.showNearestReplacePoint(new Point(e.getX(), e.getY()));
+                }
 
             }
         });
