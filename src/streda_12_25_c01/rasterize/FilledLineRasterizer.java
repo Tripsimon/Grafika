@@ -4,15 +4,15 @@ import streda_12_25_c01.model.Line;
 
 import java.awt.*;
 
-//děděno z Line Rasterizer
+//Extendování (dědění) abstraktní třídy LineRasterizer
 public class FilledLineRasterizer extends LineRasterizer {
 
+    //Kontruktor třídy
     public FilledLineRasterizer(Raster raster) {
         super(raster);
     }
 
-
-    // Kontruktor třídy
+    // Metoda rasterizace pomocí linie (Převod na metodu bodovou z důvodu jednoduchosti další práce)
     @Override
     public void rasterize(Line line) {
         int x1 = line.getX1();
@@ -28,18 +28,25 @@ public class FilledLineRasterizer extends LineRasterizer {
     @Override
     public void rasterize(int x1, int y1, int x2, int y2, Color color) {
 
+        //Deklarace proměných
         double dx,dy,steps,x,y,k;
         double xc,yc;
         dx=x2-x1;
         dy=y2-y1;
+
+        //Zajištění správné funkčnosti napříč kvadranty
         if(Math.abs(dx)>Math.abs(dy))
             steps=Math.abs(dx);
         else
             steps=Math.abs(dy);
+
+        //Výpočet pomocí rovnice
         xc=(dx/steps);
         yc=(dy/steps);
         x=x1;
         y=y1;
+
+        //Loop pro projití celé přímky
         for(k=1;k<=steps;k++)
         {
             x=x+xc;
