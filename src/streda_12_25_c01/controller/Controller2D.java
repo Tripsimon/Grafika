@@ -10,78 +10,73 @@ import java.awt.event.*;
 
 public class Controller2D {
 
-    //Vykreslovací proměné
     private final Panel panel;
     private final Raster raster;
     private Polygon polygonHolder;
 
-    //Deklarace proměných pro práci s módem trojuhelníku
     private boolean triangleMode = false;
     private Triangle triangleHolder;
 
-    //Kontruktor třídy
     public Controller2D(Panel panel) {
-        //Inicializace plátna a rasteru
         this.panel = panel;
         this.raster = panel.getRaster();
 
-        //Inicializace proměné polygonu a trojuhelníku
         polygonHolder = new Polygon(raster);
         triangleHolder = new Triangle(raster);
 
+
+
         initListeners();
+
+
+        
     }
 
-    //Metoda pro inicializaci listenerů pomocí adaptéru
     private void initListeners() {
-        //Adaptér pro práci s myší
         panel.addMouseListener(new MouseAdapter() {
-
-            //Adaptér pro stlačení tlačítek myší
+            //stlačené tlačítko
             @Override
             public void mousePressed(MouseEvent e) {
-                //Dělení podle módu práce
                 if (e.getButton() == 1) {
                     if (!triangleMode) {
                         raster.clear();
                         polygonHolder.addPoint(new Point(e.getX(), e.getY()));
                         polygonHolder.rasterize();
                     } else {
+                        System.out.println(new Point(e.getX(), e.getY()));
                         triangleHolder.addPoint(new Point(e.getX(), e.getY()));
                         triangleHolder.rasterizeTriangle();
                     }
                 }
-                if (e.getButton() == 3){
+                if (e.getButton() == 3 && !triangleMode){
                     polygonHolder.findNearest(new Point(e.getX(), e.getY()));
                 }
 
-                //Adaptér pro release tlačítek myší
+            //Release tlačítka
             }
              @Override
              public void mouseReleased(MouseEvent e){
-
-                 //Dělení podle módu práce
-
-                 if (e.getButton() == 3){
+                 if (e.getButton() == 3 && !triangleMode){
                      polygonHolder.replaceNearest(new Point(e.getX(), e.getY()));
                      raster.clear();
                      polygonHolder.rasterize();
                  }
+
+
             }
         });
 
-        //Adaptér pro práci s pohybem myši
         panel.addMouseMotionListener(new MouseAdapter() {
 
-            //Odposlouchávání pro pohnutí myší (Znázornění vygenerování)
+            //Pohnutí myši
             @Override
-            public void mouseDragged(MouseEvent e) {
-                //Dělení podle stlačeného tlačítka
-                if (e.getModifiersEx() == 1024){
+            public void mouseDragged(MouseEvent e) { //Odposlouchávání pro pohnutí myší (Znázornění vygenerování)
+                if (e.getModifiersEx() == 1024 && !triangleMode){
+                    System.out.println();
                     raster.clear();
                     polygonHolder.showWhere(new Point(e.getX(),e.getY()));
                 }
-                if (e.getModifiersEx() == 4096){
+                if (e.getModifiersEx() == 4096 && !triangleMode){
                     raster.clear();
                     polygonHolder.rasterize();
                     polygonHolder.showNearestReplacePoint(new Point(e.getX(), e.getY()));
@@ -90,33 +85,27 @@ public class Controller2D {
             }
         });
 
-        //Adaptér pro práci s klávesnicí
         panel.addKeyListener(new KeyAdapter() {
 
-            //Adapter pro release tlačítka klávesnice
             @Override
-            public void keyReleased(KeyEvent e) {
+            public void keyReleased(KeyEvent e) { //Adapter odposlouchávací delete tlačítko
 
-                //67 je kod pro tlačítko C - Vyčištění plochy
-                if (e.getKeyCode() ==67){
+                if (e.getKeyCode() ==67){ //67 je kod pro tlačítko C - Vyčištění plochy
                     raster.clear();
                     polygonHolder.clear();
                     triangleHolder.clear();
                 }
 
-                //66 je kod pro tlačítko B - Odebrání posledního bodu
-                if (e.getKeyCode() ==66){
+                if (e.getKeyCode() ==66 && !triangleMode){ //67 je kod pro tlačítko B - Odebrání posledního bodu
                     raster.clear();
                     polygonHolder.removeLast();
                     polygonHolder.rasterize();
                 }
 
-                //84 je kod pro tlačítko T - Zapnutí trojuhelníkového módu
-                if (e.getKeyCode() == 84){
-                    //Nutnost čištění !
+                if (e.getKeyCode() == 84){ //84 je kod pro tlačítko T - Zapnutí trojuhelníkového módu
                     raster.clear();
-
-                    //Dělení pro přepínání módu práce
+                    triangleHolder.clear();
+                    polygonHolder.clear();
                     if (triangleMode)
                     {
                         triangleMode = false;
