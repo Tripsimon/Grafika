@@ -43,7 +43,6 @@ public class Controller2D {
                         polygonHolder.addPoint(new Point(e.getX(), e.getY()));
                         polygonHolder.rasterize();
                     } else {
-                        System.out.println(new Point(e.getX(), e.getY()));
                         triangleHolder.addPoint(new Point(e.getX(), e.getY()));
                         triangleHolder.rasterizeTriangle();
                     }
@@ -72,7 +71,6 @@ public class Controller2D {
             @Override
             public void mouseDragged(MouseEvent e) { //Odposlouchávání pro pohnutí myší (Znázornění vygenerování)
                 if (e.getModifiersEx() == 1024 && !triangleMode){
-                    System.out.println();
                     raster.clear();
                     polygonHolder.showWhere(new Point(e.getX(),e.getY()));
                 }
@@ -91,9 +89,13 @@ public class Controller2D {
             public void keyReleased(KeyEvent e) { //Adapter odposlouchávací delete tlačítko
 
                 if (e.getKeyCode() ==67){ //67 je kod pro tlačítko C - Vyčištění plochy
+                    System.out.println("----------");
+                    System.out.println("Začátek čistícího procesu");
                     raster.clear();
                     polygonHolder.clear();
                     triangleHolder.clear();
+                    System.out.println("Čištění plochy kompletní");
+                    System.out.println("----------");
                 }
 
                 if (e.getKeyCode() ==66 && !triangleMode){ //67 je kod pro tlačítko B - Odebrání posledního bodu

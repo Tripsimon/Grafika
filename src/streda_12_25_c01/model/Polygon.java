@@ -62,17 +62,27 @@ public class Polygon {
     public void addPoint(Point J){
         this.points.add(J);
 
-        System.out.println(points.size());
+        System.out.println("Počet bodů v zásobníku: " + points.size());
     }
 
     //Metoda pro "Restart" tlačítkem C
     public void clear(){
         points.clear();
+        System.out.println("Zásobník polygonů vyčištěn");
     }
 
-    public void removeLast(){ //Odebrání posledního bodu
-        points.remove(points.size()-1);
+    public void removeLast() { //Odebrání posledního bodu
+        if (points.size() > 1) {
 
+            points.remove(points.size() - 1);
+            System.out.println("Počet bodů v zásobníku: " + points.size());
+        }else if (points.size() == 1){
+            System.out.println("Poslední bod odebrán. Zásobník je prázdný");
+            points.remove(points.size() - 1);
+
+        }else{
+            System.out.println("Nedostatek bodů k odebrání");
+        }
     }
 
     public void findNearest(Point J){
@@ -82,9 +92,7 @@ public class Polygon {
             if ((int)Math.sqrt((points.get(i).x - J.getX()) * (points.get(i).x - J.getX()) + (points.get(i).y - J.getY()) * (points.get(i).y - J.getY())) < dis){
                 dis = (int)Math.sqrt((points.get(i).x - J.getX()) * (points.get(i).x - J.getX()) + (points.get(i).y - J.getY()) * (points.get(i).y - J.getY()));
                 currentNearest = i;
-                System.out.println("Nejbližší je hrana: "+i);
             }
-            System.out.println((int)Math.sqrt((points.get(i).x - J.getX()) * (points.get(i).x - J.getX()) + (points.get(i).y - J.getY()) * (points.get(i).y - J.getY())));
         }
         dashedLineCreator.rasterize(points.get(currentNearest).x,points.get(currentNearest).y,J.getX(),J.getY(),dangerColor);
     }
@@ -95,6 +103,7 @@ public class Polygon {
 
     public void replaceNearest(Point J){
         points.set(currentNearest,J);
+        System.out.println("Úprava bodu kompletní");
     }
 
 

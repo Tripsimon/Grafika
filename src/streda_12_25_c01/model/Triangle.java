@@ -66,6 +66,7 @@ public class Triangle {
     }
 
     public void clear(){
+        System.out.println("Zásobník trojuhelníkového módu vyčištěn");
         points.clear();
     }
 
