@@ -48,7 +48,7 @@ public class Controller2D {
                         triangleHolder.rasterizeTriangle();
                     }
                 }
-                if (e.getButton() == 3){
+                if (e.getButton() == 3 && !triangleMode){
                     polygonHolder.findNearest(new Point(e.getX(), e.getY()));
                 }
 
@@ -56,7 +56,7 @@ public class Controller2D {
             }
              @Override
              public void mouseReleased(MouseEvent e){
-                 if (e.getButton() == 3){
+                 if (e.getButton() == 3 && !triangleMode){
                      polygonHolder.replaceNearest(new Point(e.getX(), e.getY()));
                      raster.clear();
                      polygonHolder.rasterize();
@@ -71,12 +71,12 @@ public class Controller2D {
             //Pohnutí myši
             @Override
             public void mouseDragged(MouseEvent e) { //Odposlouchávání pro pohnutí myší (Znázornění vygenerování)
-                if (e.getModifiersEx() == 1024){
+                if (e.getModifiersEx() == 1024 && !triangleMode){
                     System.out.println();
                     raster.clear();
                     polygonHolder.showWhere(new Point(e.getX(),e.getY()));
                 }
-                if (e.getModifiersEx() == 4096){
+                if (e.getModifiersEx() == 4096 && !triangleMode){
                     raster.clear();
                     polygonHolder.rasterize();
                     polygonHolder.showNearestReplacePoint(new Point(e.getX(), e.getY()));
@@ -96,7 +96,7 @@ public class Controller2D {
                     triangleHolder.clear();
                 }
 
-                if (e.getKeyCode() ==66){ //67 je kod pro tlačítko B - Odebrání posledního bodu
+                if (e.getKeyCode() ==66 && !triangleMode){ //67 je kod pro tlačítko B - Odebrání posledního bodu
                     raster.clear();
                     polygonHolder.removeLast();
                     polygonHolder.rasterize();
@@ -104,6 +104,8 @@ public class Controller2D {
 
                 if (e.getKeyCode() == 84){ //84 je kod pro tlačítko T - Zapnutí trojuhelníkového módu
                     raster.clear();
+                    triangleHolder.clear();
+                    polygonHolder.clear();
                     if (triangleMode)
                     {
                         triangleMode = false;
@@ -113,7 +115,6 @@ public class Controller2D {
                     {
                         triangleMode = true;
                         System.out.println("Trojůhelníkový mod zapnout");
-                        System.out.println(triangleMode);
                     }
                 }
 

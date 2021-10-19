@@ -30,7 +30,6 @@ public class Triangle {
 
 
     public void rasterizeTriangle() {
-        System.out.println(points.size());
         if ( points.size() == 1){
 
             lineCreator.rasterize(points.get(0).x,points.get(0).y,points.get(0).x,points.get(0).y,rightColor);
