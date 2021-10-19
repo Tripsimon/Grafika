@@ -23,6 +23,7 @@ public class TrivialLineRasterizer extends LineRasterizer {
     @Override
     public void rasterize(int x1a, int y1a, int x2a, int y2a, Color color) {
 
+
         double dx,dy,steps,x,y,k;
         double xc,yc;
         double x1=100,y1=20,x2=20,y2=20;
