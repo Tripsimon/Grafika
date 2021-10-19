@@ -1,0 +1,2 @@
+# Grafika TODO
+- Zip formát
