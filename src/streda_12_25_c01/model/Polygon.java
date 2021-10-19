@@ -18,6 +18,9 @@ public class Polygon {
     private DashedLineRasterizer dashedLineCreator;
     private int currentNearest;
 
+    private Color rightColor = Color.YELLOW;
+    private Color dangerColor = Color.RED;
+
     //Konstruktor třídy
     public Polygon(Raster R) {
         points = new ArrayList<>();
@@ -29,12 +32,15 @@ public class Polygon {
 
     //rasterizace linii mezi uloženými body.
     public void rasterize() {
+        if (points.size() == 1){
+            raster.setPixel(points.get(0).x,points.get(0).y,rightColor.getRGB());
+        }
         if ( points.size()>= 2){
             for (int i = 1; i < points.size(); i++) { //Je potřeba projít celé pole s body
-            lineCreator.rasterize(points.get(i-1).x,points.get(i-1).getY(),points.get(i).x,points.get(i).y,Color.yellow);
+            lineCreator.rasterize(points.get(i-1).x,points.get(i-1).getY(),points.get(i).x,points.get(i).y,rightColor);
             }
             if (points.size()>=3){
-                lineCreator.rasterize(points.get(0).x,points.get(0).getY(),points.get(points.size() -1).x,points.get(points.size() -1).y,Color.yellow);}
+                lineCreator.rasterize(points.get(0).x,points.get(0).getY(),points.get(points.size() -1).x,points.get(points.size() -1).y,rightColor);}
         }
     }
 
@@ -42,10 +48,10 @@ public class Polygon {
     public void showWhere(Point p){
         if ( points.size()>= 1){
             for (int i = 1; i < points.size(); i++) {
-                dashedLineCreator.rasterize(points.get(i-1).x,points.get(i-1).getY(),points.get(i).x,points.get(i).y,Color.red);
+                dashedLineCreator.rasterize(points.get(i-1).x,points.get(i-1).getY(),points.get(i).x,points.get(i).y,dangerColor);
             }
-            dashedLineCreator.rasterize(points.get(0).x,points.get(0).getY(),p.x,p.y,Color.red);
-            dashedLineCreator.rasterize(p.x,p.y,points.get(points.size() -1).x,points.get(points.size() -1).y,Color.red);
+            dashedLineCreator.rasterize(points.get(0).x,points.get(0).getY(),p.x,p.y,dangerColor);
+            dashedLineCreator.rasterize(p.x,p.y,points.get(points.size() -1).x,points.get(points.size() -1).y,dangerColor);
         }
 
 
@@ -80,11 +86,11 @@ public class Polygon {
             }
             System.out.println((int)Math.sqrt((points.get(i).x - J.getX()) * (points.get(i).x - J.getX()) + (points.get(i).y - J.getY()) * (points.get(i).y - J.getY())));
         }
-        dashedLineCreator.rasterize(points.get(currentNearest).x,points.get(currentNearest).y,J.getX(),J.getY(),Color.RED);
+        dashedLineCreator.rasterize(points.get(currentNearest).x,points.get(currentNearest).y,J.getX(),J.getY(),dangerColor);
     }
 
     public void showNearestReplacePoint(Point J){
-        dashedLineCreator.rasterize(points.get(currentNearest).x,points.get(currentNearest).y,J.getX(),J.getY(),Color.RED);
+        dashedLineCreator.rasterize(points.get(currentNearest).x,points.get(currentNearest).y,J.getX(),J.getY(),dangerColor);
     }
 
     public void replaceNearest(Point J){
